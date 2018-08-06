@@ -8,6 +8,7 @@
 
 <script>
     import grapesjs from 'grapesjs';
+    import axios from 'axios';
 
     export default {
         name: 'dashboard',
@@ -19,7 +20,8 @@
                     css: null,
                     components: null,
                     style: null,
-                }
+                },
+                templateId: 1
             }
         },
         mounted: function () {
@@ -47,12 +49,13 @@
                     ]
                 },
                 storageManager: {
+                    id: '',
                     type: 'remote',
                     autosave: false,
-                    autoload: true,
+                    autoload: false,
                     contentTypeJson: true,
-                    urlStore: 'http://localhost:3000/store',
-                    urlLoad: 'http://localhost:3000/store',
+                    urlStore: `api/templates/${this.templateId}`,
+                    urlLoad: `api/templates/${this.templateId}`,
                 }
             });
 
@@ -61,6 +64,8 @@
             });
 
             this.editor.on('change', this.change);
+
+            this.checkTemplates();
         },
         methods: {
             change() {
@@ -68,6 +73,16 @@
             },
             saveEdits() {
                 this.editor.store();
+            },
+            checkTemplates() {
+                axios
+                    .get(`api/templates/${this.templateId}`)
+                    .then(response => {
+                        this.editor.load();
+                    })
+                    .catch(error => {
+                        this.editor.render();
+                    });
             }
         },
     }

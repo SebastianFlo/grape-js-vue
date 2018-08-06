@@ -9,6 +9,7 @@
     "start-server": "json-server --watch server/db.json"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "grapesjs": "^0.14.25",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
