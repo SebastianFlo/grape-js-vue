@@ -9,6 +9,8 @@
 <script>
     import grapesjs from 'grapesjs';
     import axios from 'axios';
+    // import 'grapesjs-blocks-basic';
+    import 'grapesjs-preset-webpage';
 
     export default {
         name: 'dashboard',
@@ -30,23 +32,58 @@
                 autorender: 0,
                 components: this.LandingPage.components || this.LandingPage.html,
                 style: this.LandingPage.style || this.LandingPage.css,
+                plugins: [
+                    // 'gjs-blocks-basic',
+                    'gjs-preset-webpage'
+                ],
                 blockManager: {
-                    appendTo: '#blocks',
-                    blocks: [
-                        {
-                            id: 'section', // id is mandatory
-                            label: '<b>Section</b>', // You can use HTML/SVG inside labels
-                            attributes: { class:'gjs-block-section' },
-                            content: `<section>
-                            <h1>This is a simple title</h1>
-                            <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
-                            </section>`,
-                        }, {
-                            id: 'text',
-                            label: 'Text',
-                            content: '<div data-gjs-type="text">Insert your text here</div>',
-                        },
-                    ]
+                    // appendTo: '#blocks',
+                    // blocks: [
+                    //     {
+                    //         id: 'section', // id is mandatory
+                    //         label: '<b>Section</b>', // You can use HTML/SVG inside labels
+                    //         attributes: { class:'gjs-block-section' },
+                    //         content: `<section>
+                    //         <h1>This is a simple title</h1>
+                    //         <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+                    //         </section>`,
+                    //     }, {
+                    //         id: 'text',
+                    //         label: 'Text',
+                    //         content: '<div data-gjs-type="text">Insert your text here</div>',
+                    //     }, {
+                    //         id: 'my-first-block',
+                    //         label: 'Simple block',
+                    //         content: '<div class="my-block">This is a simple block</div>',
+                    //     }, {
+                    //         id: 'my-map-block',
+                    //         label: 'Simple map block',
+                    //         content: {
+                    //             type: 'map', // Built-in 'map' component
+                    //             style: {
+                    //                 height: '350px'
+                    //             },
+                    //             removable: false, // Once inserted it can't be removed
+                    //         }
+                    //     }, {
+                    //         id: 'my-image',
+                    //         label: 'Simple Image',
+                    //         content: {
+                    //             type: 'image',
+                    //             style: {
+                    //                 height: '250px',
+                    //                 width: '400px'
+                    //             },
+                    //         }
+                    //     }, {
+                    //         id: 'the-row-block',
+                    //         label: '2 Columns',
+                    //         content: `<div class="row" data-gjs-droppable=".row-cell" data-gjs-custom-name="Row">
+                    //             <div class="row-cell" data-gjs-draggable=".row"></div>
+                    //             <div class="row-cell" data-gjs-draggable=".row"></div>
+                    //             </div>`
+                    //     }
+                    // ]
                 },
                 storageManager: {
                     id: '',
@@ -56,7 +93,12 @@
                     contentTypeJson: true,
                     urlStore: `api/templates/${this.templateId}`,
                     urlLoad: `api/templates/${this.templateId}`,
-                }
+                },
+                assetManager: {
+                    upload: 'api/assets',
+                    // The name used in POST to pass uploaded files, default: `'files'`
+                    uploadName: 'files',
+                },
             });
 
             this.editor.on('storage:load', e => {
@@ -79,6 +121,7 @@
                     .get(`api/templates/${this.templateId}`)
                     .then(response => {
                         this.editor.load();
+                        console.log('Loading templates');
                     })
                     .catch(error => {
                         this.editor.render();

@@ -8,6 +8,14 @@
   </div>
 </template>
 
+
+<style src='grapesjs/dist/css/grapes.min.css'>
+/* global styles */
+</style>
+<style src='grapesjs-preset-webpage/dist/grapesjs-preset-webpage.min.css'>
+/* global styles */
+</style>
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

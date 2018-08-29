@@ -11,6 +11,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "grapesjs": "^0.14.25",
+    "grapesjs-blocks-basic": "^0.1.8",
+    "grapesjs-preset-webpage": "^0.1.10",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
