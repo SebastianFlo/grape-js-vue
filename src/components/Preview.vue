@@ -33,9 +33,6 @@
                         let { html, css } = response.data;
                         this.rawHtml = html;
                         this.generateStyle(css);
-                        console.log('Loading templates', html, css);
-
-
                     })
                     .catch(error => {
                         console.error('Loading templates', error);
