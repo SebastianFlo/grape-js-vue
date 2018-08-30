@@ -95,9 +95,8 @@
                     urlLoad: `api/templates/${this.templateId}`,
                 },
                 assetManager: {
-                    upload: 'api/assets',
-                    // The name used in POST to pass uploaded files, default: `'files'`
-                    uploadName: 'files',
+                    disableUpload: false,
+                    uploadFile: this.uploadAsset
                 },
             });
 
@@ -126,6 +125,23 @@
                     .catch(error => {
                         this.editor.render();
                     });
+            },
+            uploadAsset(e) {
+                const files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+                const formData = new FormData();
+
+                formData.append('files', files[0]) // containing all the selected images from local
+
+                axios.post('api/files', formData, { headers: {'Content-Type': 'multipart/form-data' }})
+                .then(response => {
+                    const assets = response.data.data.map(imageName => ({
+                        name: imageName,
+                        src: `api/files/${imageName}`
+                    }));
+                    this.editor.AssetManager.add(assets);
+                    this.editor.AssetManager.render();
+                })
+                .catch(error => error)
             }
         },
     }
